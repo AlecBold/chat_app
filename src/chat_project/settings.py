@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'chat_project',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,11 +56,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'chat_project.urls'
+ASGI_APPLICATION = 'chat_project.asgi.application'
+WSGI_APPLICATION = 'chat_project.wsgi.application'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,8 +76,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'chat_project.wsgi.application'
 
 
 # Database
