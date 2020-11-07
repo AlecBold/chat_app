@@ -27,7 +27,7 @@ DEBUG = False
 
 HEROKU_APP_NAME = 'alecbold-chat-app'
 
-ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com']
+ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
