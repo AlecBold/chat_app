@@ -15,28 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf import settings
-from django.conf.urls import include
-from django.conf.urls.static import static
-
-from personal.views import home_screen_view
-
-from account.views import (
-    register_user,
-    login_user,
-    logout_user,
-    user_search,
-)
 
 urlpatterns = [
-    path('', home_screen_view, name='home'),
     path('admin/', admin.site.urls),
-    # path('chat/', include('chat.urls', namespace='chat')),
-    path('login/', login_user, name='login'),
-    path('logout/', logout_user, name='logout'),
-    path('register/', register_user, name='register'),
-    path('search/', user_search, name='search')
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
