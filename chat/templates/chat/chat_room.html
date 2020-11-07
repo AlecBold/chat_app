@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %}ChatRoom{% endblock %}
+
+{% block content %}
+
+<div class="flex-column">
+    {% fox x in m_and_f $}
+    <div>
+        <span class="username">x.</span>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
