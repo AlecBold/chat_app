@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'chat_project',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
