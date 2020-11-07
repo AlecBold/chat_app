@@ -6,15 +6,6 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
 
-        counter = 0
-
-        while counter < 20:
-            self.send(text_data=f'count: {counter}')
-            time.sleep(1)
-            counter += 1
-
-        self.close()
-
     def disconnect(self, close_code):
         pass
 
