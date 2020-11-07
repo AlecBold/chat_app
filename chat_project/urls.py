@@ -31,7 +31,7 @@ from account.views import (
 urlpatterns = [
     path('', home_screen_view, name='home'),
     path('admin/', admin.site.urls),
-    path('chat/', include('chat.urls', namespace='chat')),
+    # path('chat/', include('chat.urls', namespace='chat')),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('register/', register_user, name='register'),
