@@ -1,1 +1,1 @@
-web: python3 src/manage.py 0.0.0.0:5000
+web: python3 src/manage.py runserver 0.0.0.0:5000
