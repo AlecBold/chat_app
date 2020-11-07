@@ -25,7 +25,7 @@ SECRET_KEY = 'v_9%5^b8^sl$48aicfi&ez@dp6!%$=*bvx9c43w-04v^s3locf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-HEROKU_APP_NAME = 'chat_app'
+HEROKU_APP_NAME = 'alecbold-chat-app'
 
 ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com', '127.0.0.1']
 
