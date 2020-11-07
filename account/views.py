@@ -15,28 +15,20 @@ def register_user(request, *args, **kwargs):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            print("form is valid")
             form.save()
-            print("form is save")
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(username=username, password=raw_password)
-            print(f"authenticated {account}")
             login(request, account)
             destination = get_redirect_if_exist(request)
             if destination:
-                print(f"redirect to {destination}")
                 return redirect(destination)
-            print("redirect to home")
             return redirect('home')
         else:
-            print("form is not valid")
             context['form'] = form
     else:
-        print('put form')
         context['form'] = RegisterForm()
 
-    print("get register form")
     return render(request, 'account/register.html', context)
 
 
