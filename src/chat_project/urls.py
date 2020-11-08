@@ -24,6 +24,7 @@ urlpatterns = [
     path('room/', views.room, name="room"),
     path('rooms/', views.rooms, name="rooms"),
 
+    path('logout/', views.logout, name="logout"),
     path('login/', views.login, name="login"),
     path('register/', views.register, name="register"),
 

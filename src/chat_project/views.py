@@ -8,7 +8,10 @@ def rooms(request):
     return render(request, 'rooms.html', {}) 
 
 def room(request):
-    return render(request, 'room.html', {}) 
+    return render(request, 'room.html', {})
+
+def logout(request):
+    return render(request, 'logout.html', {})
 
 def login(request):
     return render(request, 'login.html', {}) 
