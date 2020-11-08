@@ -20,9 +20,12 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('rooms/', views.socket),
+
     path('room/', views.room, name="room"),
-    path('login/', views.login),
-    path('register/', views.register),
-    path('admin/', admin.site.urls),
+    path('rooms/', views.rooms, name="rooms"),
+
+    path('login/', views.login, name="login"),
+    path('register/', views.register, name="register"),
+
+    path('admin/', admin.site.urls, name="admin"),
 ]
