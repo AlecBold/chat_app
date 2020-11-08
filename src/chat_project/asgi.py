@@ -19,6 +19,7 @@ from . import consumers
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_project.settings')
 
+# https://channels.readthedocs.io/en/stable/tutorial/index.html
 websocket_urlpatterns = [
     re_path(r'ws/chat/$', consumers.ChatConsumer.as_asgi()),
 ]
