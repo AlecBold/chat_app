@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v_9%5^b8^sl$48aicfi&ez@dp6!%$=*bvx9c43w-04v^s3locf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 HEROKU_APP_NAME = 'alecbold-chat-app'
 
@@ -84,15 +84,16 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'NAME': 'alex_django_chat_app',
+        'USER': 'django',
         'PASSWORD': 'password',
         'HOST': 'localhost'
     }
 }
 
-import dj_database_url
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+# Production Database
+# import dj_database_url
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation

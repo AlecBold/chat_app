@@ -1,0 +1,17 @@
+<style>
+    .header-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .btn-auth {
+        margin-right: 8px;
+    }
+</style>
+<div class="header-container">
+    {% if user.is_authenticated %}
+        <a class="btn-auth" href="{% url 'logout' %}">Log Out</a>
+    {% else %}
+        <a class="btn-auth" href="{% url 'login' %}">Login</a>
+        <a class="btn-auth" href="{% url 'register' %}">Register</a>
+    {% endif%}
+</div>

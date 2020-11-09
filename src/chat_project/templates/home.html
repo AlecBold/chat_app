@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+
+</style>
+<div class="home">
+    <div>
+        {% if user.is_authenticated %}
+        <p>Hi, {{ user.username }}.</p>
+        {% else %}
+        <p>You are not logged in.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

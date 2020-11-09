@@ -1,41 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'index.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-</head>
+{% block title %}Login{% endblock %}
 
-<body>
-    <style>
-        body {
-            display: flex;
-        }
-
-        main {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
-    <main>
-        <form action="">
-            <label>
-                login
-                <input type="text">
-            </label>
-            <label>
-                password
-                <input type="password">
-            </label>
-        </form>
-
-    </main>
-</body>
-
-</html>
+{% block content %}
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .error {
+        color: red;
+    }
+</style>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <label>
+        username
+        <input type="text" name="username">
+    </label>
+    <label>
+        password
+        <input type="password" name="password">
+    </label>
+    <div class="error">
+        <p>
+            {{ errors }}
+        </p>
+    </div>
+    <label>
+        <input type="submit" value="Submit">
+    </label>
+</form>
+{% endblock %}
