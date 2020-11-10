@@ -1,7 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from uuid import uuid4
 from datetime import datetime
+
+
+def get_id():
+    return str(uuid4())
 
 
 class UserModel(User):
@@ -9,7 +14,7 @@ class UserModel(User):
 
 
 class RoomModel(models.Model):
-    room_id = models.CharField(primary_key=True, auto_created=True, max_length=50)
+    room_id = models.CharField(primary_key=True, unique=True, default=uuid4, max_length=36)
     user1 = models.ForeignKey(UserModel, related_name='user1', on_delete=models.CASCADE)
     user2 = models.ForeignKey(UserModel, related_name='user2', on_delete=models.CASCADE)
 

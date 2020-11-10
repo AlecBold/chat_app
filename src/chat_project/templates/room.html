@@ -46,9 +46,9 @@
         <div class="chat">
             {% for chat in data %}
                 {% if chat.type == 'from' %}
-                    <span class="chat-item-from">chat.message</span>
+                    <span class="chat-item-from">{{ chat.message }}</span>
                 {% else %}
-                    <span class="chat-item-to">chat.message</span>
+                    <span class="chat-item-to">{{ chat.message }}</span>
                 {% endif %}
             {% endfor %}
         </div>
@@ -67,10 +67,10 @@
             const messageElement = document.createElement('span');
             messageElement.innerHTML = message;
             if (type === 'from') {
-                messageElement.className.add("chat-item-from")
+                messageElement.classList.add("chat-item-from")
             }
             if (type === 'to') {
-                messageElement.className.add("chat-item-to")
+                messageElement.classList.add("chat-item-to")
             }
 
             return messageElement; 
@@ -84,31 +84,31 @@
 
         // Socket Logic
         const roomId = "{{ room_id }}";
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+<!--        const roomName = JSON.parse(document.getElementById('room-name').textContent);-->
 
         const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomId}`);
 
         chatSocket.onopen = function(evt)  {
             // Запросить состояние комнаты
             // List<{type: from | to, data: string}>
-            const messageData = JSON.parse(evt.data);
-            
-            messageData.forEach(item => {
-                chatElement.appendChild(
-                    createChatElement(item.type, item.message)
-                    );
-            });
+            // const messageData = JSON.parse(evt.data);
+
+            // messageData.forEach(item => {
+            //    chatElement.appendChild(
+            //        createChatElement(item.type, item.message)
+            //        );
+            //});
 
             inputElement.addEventListener('keypress', function(keyboardEvent) {
-                const ENTER_KEYCODE = 13;
-                if (keyboardEvent.key === ENTER_KEYCODE) {
+                if (keyboardEvent.key === 'Enter') {
                     const message = {
                         type: 'from',
                         message: inputElement.value
                     };
-                    // Отправляем сообщение серверу 
+                    // Отправляем сообщение серверу
                     // {type: from | to, data: string}
                     chatSocket.send(JSON.stringify(message));
+                    inputElement.value = "";
                 }
             });
 
@@ -120,6 +120,7 @@
                 // Отправляем сообщение серверу
                 // {type: from | to, data: string}
                 chatSocket.send(JSON.stringify(message));
+                inputElement.value = "";
             });
         }
 
@@ -127,8 +128,9 @@
             // Обновить список сообщений
             // {type: from | to, data: string}
             const messageData = JSON.parse(evt.data);
-            const chatElement = createChatElement(messageData.type, messageData.message)
-            chatElement.appendChild(chatElement);
+            const messageElement = createChatElement(messageData.type, messageData.message);
+            console.log(messageData.message);
+            chatElement.appendChild(messageElement);
         };
 
         chatSocket.onclose = function (e) {

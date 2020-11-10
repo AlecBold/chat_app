@@ -21,7 +21,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat_project.settings')
 
 # https://channels.readthedocs.io/en/stable/tutorial/index.html
 websocket_urlpatterns = [
-    re_path(r'ws/chat/(?P<room_id>\w+)/$', consumers.ChatConsumer.as_asgi()),
+    re_path(r'ws/chat/(?P<room_id>.+)$', consumers.ChatConsumer.as_asgi()),
 ]
 
 application = ProtocolTypeRouter({

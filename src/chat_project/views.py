@@ -15,15 +15,15 @@ def home_view(request):
 def rooms_view(request):
     context = {}
     user = request.user
-    if user is not None and user.is_authenticated:
+    if user.is_authenticated:
         rooms = RoomModel.objects.filter(Q(user1=user) | Q(user2=user))
         rooms_data = []
         for room in rooms:
             d = {}
-            if room.user1 is not user:
-                d['username'] = room.user1.username
-            else:
+            if room.user1.username == user.username:
                 d['username'] = room.user2.username
+            else:
+                d['username'] = room.user1.username
             d['room_id'] = room.room_id
             rooms_data.append(d)
         context['rooms'] = rooms_data
@@ -35,25 +35,45 @@ def rooms_view(request):
 def room_view(request, room_id):
     context = {}
     user = request.user
-    if user is not None and user.is_authenticated:
+    if user.is_authenticated:
         room = RoomModel.objects.get(room_id=room_id)
         if room is not None:
-            message_objs = MessageRoomModel.objects.get(room_id=room_id)
+            message_objs = MessageRoomModel.objects.filter(room_id=room_id).order_by('date_created')
             data = []
             for message_obj in message_objs:
                 d = {}
-                if message_obj.user is user:
-                    d['type'] = 'from'
-                else:
+                if message_obj.user.username == user.username:
                     d['type'] = 'to'
+                else:
+                    d['type'] = 'from'
                 d['message'] = message_obj.message
                 data.append(d)
+
             context['data'] = data
+            context['room_id'] = room_id
             return render(request, 'room.html', context)
         else:
             return HttpResponse("Room does not exist.")
 
     return redirect('home')
+
+
+def get_messages(room_id, user):
+    context = {}
+    room = RoomModel.objects.get(room_id=room_id)
+    if room is not None:
+        message_objs = MessageRoomModel.objects.filter(room_id=room_id)
+        data = []
+        for message_obj in message_objs:
+            d = {}
+            if message_obj.user is user:
+                d['type'] = 'from'
+            else:
+                d['type'] = 'to'
+            d['message'] = message_obj.message
+            data.append(d)
+
+        context['data'] = data
 
 
 def logout_view(request):
@@ -93,7 +113,7 @@ def register_view(request):
 def search_user_view(request):
     context = {}
     user = request.user
-    if user is not None and user.is_authenticated:
+    if user.is_authenticated:
         if request.method == "POST":
             query = request.POST.get("q")
             users = UserModel.objects.filter(Q(username__icontains=query), ~Q(username=user.username))
@@ -109,7 +129,7 @@ def search_user_view(request):
 
 def join_chat_view(request, username):
     user = request.user
-    if user is not None and user.is_authenticated:
+    if user.is_authenticated:
         user_join = UserModel.objects.get(username=username)
         if user_join is None:
             return HttpResponse("User does not exist.")
@@ -122,8 +142,9 @@ def join_chat_view(request, username):
                 try:
                     room = RoomModel.objects.get(user1=user_join, user2=user)
                 except RoomModel.DoesNotExist:
-                    room = RoomModel(user1=user, user2=user_join)
+                    room = RoomModel(user1=UserModel.objects.get(username=user.username), user2=user_join)
                     room.save()
-            room_view(request, room.room_id)
+            print(f"ROOM_ID: {room.room_id}")
+            return redirect(f'/room/{room.room_id}')
 
     return redirect('home')
