@@ -1,28 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rooms</title>
-    <style>
-        .list {
-            display: flex;
-            flex-direction: column;
-        }
+{% extends 'index.html' %}
 
-        .item {
-            padding: 10px 0;
-            border-bottom: 2px solid silver;
-        }
-    </style>
-</head>
-<body>
-    <main>
-        <div class="list">
-            <div class="item">
-                <a href="/room">room Name</a>
-            </div>
-        </div>
-    </main> 
-</body>
-</html>
+{% block title %}Rooms{% endblock %}
+
+{% block content %}
+<style>
+    .list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item {
+        padding: 10px 0;
+        border-bottom: 2px solid silver;
+    }
+</style>
+<div class="list">
+    {% if rooms %}
+    {% for room in rooms %}
+    <div class="item">
+        <p class="username">{{ room.username }}</p>
+        <a href="/room/{{ room.room_id }}">Join room</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>You don't have any chats.</p>
+    {% endif %}
+</div>
+{% endblock %}

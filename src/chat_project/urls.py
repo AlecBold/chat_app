@@ -19,10 +19,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="home"),
+    path('', views.home_view, name="home"),
 
-    path('room/', views.room, name="room"),
-    path('rooms/', views.rooms, name="rooms"),
+    path('room/<str:room_id>', views.room_view, name="room"),
+    path('rooms/', views.rooms_view, name="rooms"),
+
+    path('join_chat/user/<str:username>', views.join_chat_view, name='join_chat'),
+
+    path('search/', views.search_user_view, name="search"),
 
     path('logout/', views.logout_view, name="logout"),
     path('login/', views.login_view, name="login"),

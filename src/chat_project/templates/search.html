@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<style>
+    .list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item {
+        padding: 10px 0;
+        border-bottom: 2px solid silver;
+    }
+</style>
+<form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+    <input name="q" type="text" placeholder="Search ...">
+</form>
+<div class="list">
+    {% if users %}
+    {% for user in users %}
+    <div class="item">
+        <p class="username">{{ user.username }}</p>
+        <a href="/join_chat/user/{{ user.username }}">Join chat</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No users</p>
+    {% endif %}
+</div>
+{% endblock %}

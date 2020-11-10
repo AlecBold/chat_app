@@ -9,9 +9,9 @@
 <div class="home">
     <div>
         {% if user.is_authenticated %}
-        <p>Hi, {{ user.username }}.</p>
+            <p>Hi, {{ user.username }}.</p>
         {% else %}
-        <p>You are not logged in.</p>
+            <p>You are not logged in.</p>
         {% endif %}
     </div>
 </div>

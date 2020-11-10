@@ -1,5 +1,6 @@
 import json
 import time
+from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 
@@ -11,4 +12,13 @@ class ChatConsumer(WebsocketConsumer):
         pass
 
     def receive(self, text_data):
-        self.send(text_data='works')
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        data = {
+            'type': 'to',
+            'message': message
+        }
+        self.send(text_data=json.dumps(data))
+
+        async_to_sync(self.channel_layer)
+
